@@ -53,15 +53,12 @@ public class MColoring {
         }
     }
 
-    public void getColoring(int m) {
+    public ArrayList<int[]> getColoring(int m) {
         this.mColors = m;
 
         mColoring(-1);
 
-        System.out.println("ALL COLORINGS:");
-        for (int[] allMColoring : allMColorings) {
-            System.out.println(Arrays.toString(allMColoring));
-        }
+        return allMColorings;
     }
 
 }
