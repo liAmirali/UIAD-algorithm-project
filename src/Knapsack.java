@@ -5,13 +5,11 @@ public class Knapsack {
     public void buyCarpet(int money) {
         ArrayList<Carpet> carpets = new ArrayList<>(); // must change with carpets from system
 
-
     }
 
     public int[][] knapsack(int capacity, int n, int[] weights, int[] values) {
         int[][] K = new int[n + 1][capacity + 1];
         boolean[] inSack = new boolean[n];
-
 
         for (int i = 0; i <= n; i++) {
             for (int w = 0; w <= capacity; w++) {
