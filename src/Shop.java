@@ -1,10 +1,22 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Knapsack {
+public class Shop {
+    ArrayList<Carpet> carpets;
+    int[] carpetsCosts;
+
+    public Shop(ArrayList<Carpet> carpets) {
+        this.carpets = carpets;
+        this.carpetsCosts = new int[carpets.size()];
+        for (int i = 0; i < carpets.size(); i++) {
+            this.carpetsCosts[i] = carpets.get(i).getCost();
+        }
+    }
 
     public void buyCarpet(int money) {
-        ArrayList<Carpet> carpets = new ArrayList<>(); // must change with carpets from system
-
+        int[] values = new int[this.carpets.size()];
+        Arrays.fill(values, 1);
+        printKnapsack(money, this.carpets.size(), this.carpetsCosts, values);
     }
 
     public boolean[] knapsack(int capacity, int n, int[] weights, int[] values) {
@@ -26,8 +38,7 @@ public class Knapsack {
                         K[i][w] = excludeValue;
                         inSack[i] = false;
                     }
-                }
-                else {
+                } else {
                     K[i][w] = K[i - 1][w];
                     inSack[i] = false;
                 }
