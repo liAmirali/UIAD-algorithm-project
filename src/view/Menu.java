@@ -71,7 +71,7 @@ public class Menu {
             throw new RuntimeException(e);
         }
 
-        
+
     }
 
     static void clearScreen() {
