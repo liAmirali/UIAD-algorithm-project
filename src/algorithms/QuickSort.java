@@ -11,24 +11,24 @@ public class QuickSort {
      */
     public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
-            int pivotIndex = partition(arr, low, high);
-            quickSort(arr, low, pivotIndex - 1);
-            quickSort(arr, pivotIndex + 1, high);
+            int pivotPoint = partition(arr, low, high);
+            quickSort(arr, low, pivotPoint - 1);
+            quickSort(arr, pivotPoint + 1, high);
         }
     }
 
     private static int partition(int[] arr, int low, int high) {
         int pivot = arr[low];
 
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
+        int j = low;
+        for (int i = low + 1; i <= high; i++) {
+            if (arr[i] < pivot) {
+                j++;
                 swap(arr, i, j);
             }
         }
-        swap(arr, i + 1, high); // Swapping the pivot
-        return (i + 1);
+        swap(arr, low, j); // Swapping the pivot
+        return j;
     }
 
     private static void swap(int[] arr, int i, int j) {

@@ -6,6 +6,14 @@ public class SequenceAlignment {
     public SequenceAlignment() {
     }
 
+    /**
+     *
+     * @param x String 1
+     * @param y String 2
+     * @param pxy Mismatch penalty
+     * @param pgap Gap penalty
+     * @return An array of 3 Strings: first and second are the result strings, and third is the penalty number as a string
+     */
     public static String[] align(String x, String y, int pxy, int pgap) {
         int m = x.length();
         int n = y.length();
@@ -21,8 +29,7 @@ public class SequenceAlignment {
 
         for (int i = 1; i <= m; i++)
             for (int j = 1; j <= n; j++)
-                if (x.charAt(i - 1) == y.charAt(j - 1))
-                    table[i][j] = table[i - 1][j - 1];
+                if (x.charAt(i - 1) == y.charAt(j - 1)) table[i][j] = table[i - 1][j - 1];
                 else
                     table[i][j] = Math.min(Math.min(table[i - 1][j - 1] + pxy, table[i - 1][j] + pgap), table[i][j - 1] + pgap);
 
@@ -60,13 +67,11 @@ public class SequenceAlignment {
                 j--;
             }
         }
-        while (xpos > 0)
-            if (i > 0) xans[xpos--] = x.charAt(--i);
-            else xans[xpos--] = '_';
+        while (xpos > 0) if (i > 0) xans[xpos--] = x.charAt(--i);
+        else xans[xpos--] = '_';
 
-        while (ypos > 0)
-            if (j > 0) yans[ypos--] = y.charAt(--j);
-            else yans[ypos--] = '_';
+        while (ypos > 0) if (j > 0) yans[ypos--] = y.charAt(--j);
+        else yans[ypos--] = '_';
 
         // Finding the index that the actual answers start
         int start = 1;
@@ -86,6 +91,6 @@ public class SequenceAlignment {
             str2.append((char) yans[i]);
 
 
-        return new String[]{str1.toString(), str2.toString()};
+        return new String[]{str1.toString(), str2.toString(), String.valueOf(table[m][n])};
     }
 }

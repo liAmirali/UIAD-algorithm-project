@@ -1,11 +1,15 @@
 package view;
 
 import algorithms.MColoring;
+import algorithms.QuickSort;
+import algorithms.SequenceAlignment;
 import graph.Graph;
 import io.FileIO;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
@@ -30,7 +34,7 @@ public class Menu {
                 showDeignPage();
             }
             case "2" -> {
-                System.out.println("Searching");
+                showSearchPage();
             }
             case "3" -> {
                 System.out.println("Purchasing");
@@ -103,6 +107,65 @@ public class Menu {
         if (m == 10) {
             System.out.println("Found no coloring with at most 10 colors.");
         }
+    }
+
+    static void showSearchPage() {
+        clearScreen();
+        printHeader("Searching for Similarity");
+
+
+        int numberOfCarpets = FileIO.CARPETS_FILE_PATHS.length;
+        System.out.println("Found " + numberOfCarpets + " carpets.");
+        System.out.print("Choose the carpet index to search for similar ones [0- " + (numberOfCarpets - 1) + "] >>> ");
+
+        int selected = stdin.nextInt();
+        while (selected < 0 || selected >= numberOfCarpets) {
+            System.out.print("Number not in range. Try again >>> ");
+
+            selected = stdin.nextInt();
+        }
+
+        String theCarpet;
+        try {
+            ArrayList<String> lines = FileIO.readFromFile(FileIO.CARPETS_FILE_PATHS[selected]);
+            theCarpet = String.join(" ", lines);
+        } catch (FileNotFoundException e) {
+            printError("Couldn't read the selected carpet.");
+            showMainMenu();
+            return;
+        }
+
+        int[] penalties = new int[numberOfCarpets];
+        HashMap<Integer, Integer> penaltyToIndex = new HashMap<>();
+
+        penaltyToIndex.put(selected, 0);
+
+        for (int i = 0; i < numberOfCarpets; i++) {
+            if (i == selected) continue;
+
+            try {
+                ArrayList<String> lines = FileIO.readFromFile(FileIO.CARPETS_FILE_PATHS[i]);
+                String wholeCarpet = String.join(" ", lines);
+
+                String[] alignmentResult = SequenceAlignment.align(theCarpet, wholeCarpet, 2, 3);
+                penalties[i] = Integer.parseInt(alignmentResult[2]);
+                penaltyToIndex.put(penalties[i], i);
+
+            } catch (FileNotFoundException e) {
+                printError("Couldn't read carpet #" + i);
+            }
+        }
+
+        System.out.println("All penalties sorted:");
+        System.out.println(Arrays.toString(penalties));
+
+        QuickSort.quickSort(penalties, 0, 5);
+
+        System.out.println("Similar ones and their scores: ");
+        System.out.println("[1] Carpet #" + penaltyToIndex.get(penalties[1]) + " with penalty " + penalties[1]);
+        System.out.println("[2] Carpet #" + penaltyToIndex.get(penalties[2]) + " with penalty " + penalties[2]);
+        System.out.println("[3] Carpet #" + penaltyToIndex.get(penalties[3]) + " with penalty " + penalties[3]);
+
     }
 
     static void clearScreen() {
