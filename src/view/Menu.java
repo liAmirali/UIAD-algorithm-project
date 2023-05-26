@@ -1,8 +1,11 @@
 package view;
 
 import algorithms.MColoring;
+import algorithms.Shop;
+import algorithms.PathFinder;
 import graph.Graph;
 import io.FileIO;
+import models.Carpet;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class Menu {
 
     public static void showDeignPage() {
         clearScreen();
-        printHeader("Design a New Carpet");
+        printHeader("Design a New models.Carpet");
 
         int[][] matrix;
         int n;
@@ -64,7 +67,7 @@ public class Menu {
                 int u = Integer.parseInt(nodes[1]) - 1;
 
                 if (v > n || u > n) {
-                    System.out.println("Invalid input. Node numbers cannot be larger than " + n);
+                    System.out.println("Invalid input. algorithms.Node numbers cannot be larger than " + n);
                     break;
                 }
 
@@ -90,7 +93,7 @@ public class Menu {
                 for (int i = 0; i < colorings.size(); i++) {
                     System.out.println("Coloring #" + (i + 1) + ":");
                     for (int j = 0; j < colorings.get(i).length; j++) {
-                        System.out.println("Node #" + j + ": " + "Color[" + colorings.get(i)[j] + "]");
+                        System.out.println("algorithms.Node #" + j + ": " + "Color[" + colorings.get(i)[j] + "]");
                     }
                 }
 
@@ -105,6 +108,43 @@ public class Menu {
         }
     }
 
+    public static void runShopTest() {
+        ArrayList<Carpet> carpets = new ArrayList<>();
+        carpets.add(new Carpet(200));
+        carpets.add(new Carpet(100));
+        carpets.add(new Carpet(400));
+        carpets.add(new Carpet(900));
+        carpets.add(new Carpet(500));
+        Shop shop = new Shop(carpets);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter your money: ");
+        int money = scanner.nextInt();
+        shop.buyCarpet(money);
+    }
+
+    public static void runPathFinderTest() {
+        int[][] coordinates = {
+                {0, 5},
+                {5, 0},
+                {2, 1},
+                {0, 3},
+                {0, 0}
+        };
+
+        int[][] edges = {
+                {0, 1},
+                {1, 2},
+                {0, 2},
+                {1, 3},
+                {2, 3},
+                {3, 4}
+        };
+
+        PathFinder pathFinder = new PathFinder(coordinates, edges);
+        pathFinder.chooseVertexForShortestPath();
+    }
+
     static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -112,7 +152,7 @@ public class Menu {
 
     static void printHeader(String text) {
         System.out.print(Color.ANSI_BLUE_BACKGROUND + "### " + Color.ANSI_RESET);
-        System.out.print(Color.ANSI_BLUE_BACKGROUND + "Carpet Factory" + Color.ANSI_RESET);
+        System.out.print(Color.ANSI_BLUE_BACKGROUND + "models.Carpet Factory" + Color.ANSI_RESET);
         System.out.println(Color.ANSI_BLUE_BACKGROUND + " ###" + Color.ANSI_RESET);
 
         System.out.print(Color.ANSI_CYAN_BACKGROUND + "-- " + Color.ANSI_RESET);

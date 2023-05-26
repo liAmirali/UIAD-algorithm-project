@@ -1,3 +1,5 @@
+package algorithms;
+
 public class Node implements Comparable<Node> {
     public final int index;
     public final int distance;
@@ -6,7 +8,6 @@ public class Node implements Comparable<Node> {
         this.index = index;
         this.distance = distance;
     }
-
 
     @Override
     public int compareTo(Node o) {
