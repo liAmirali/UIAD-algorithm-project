@@ -8,14 +8,14 @@ import java.util.ArrayList;
 public class MColoring {
     private final Graph graph;
     final private int n;
-    final private ArrayList<int[]> allMColorings;
+    private ArrayList<int[]> allMColorings;
     private int[] coloring;
     private int mColors;
 
     public MColoring(Graph graph) {
         this.graph = graph;
         this.allMColorings = new ArrayList<>();
-        this.n = graph.numVertices();
+        this.n = graph.size();
         this.coloring = new int[this.n];
     }
 
@@ -52,6 +52,8 @@ public class MColoring {
 
     public ArrayList<int[]> getColoring(int m) {
         this.mColors = m;
+
+        this.allMColorings = new ArrayList<>();
 
         mColoring(-1);
 
