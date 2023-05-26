@@ -1,16 +1,38 @@
-import graph.AdjacencyMapGraph;
-
 import java.util.*;
 
 
 public class PathFinder {
-    private int[][] graph;
+    private final int[][] graph;
+    private final int[][] coordinates;
+    private final int[][] edges;
     private final int[] prev;
 
-    public PathFinder(int[][] graph) {
-        this.graph = graph;
+    public PathFinder(int[][] coordinates, int[][] edges) {
+        this.coordinates = coordinates;
+        this.edges = edges;
+        this.graph = makeGraph(this.coordinates, this.edges);
         prev = new int[graph.length];
         Arrays.fill(this.prev, -1);
+    }
+
+    public void chooseVertexForShortestPath() {
+        showVertices();
+        System.out.println("Please choose nearest vertex to yourself: ");
+        Scanner scanner = new Scanner(System.in);
+        int index = scanner.nextInt() - 1;
+        int[] dj = dijkstra(this.graph, index);
+        ArrayList<Integer> path = getShortestPath(dj[1]);
+        System.out.println("The length of minimum path is: " + dj[0]);
+        System.out.println("The Path: " + path);
+    }
+
+    public void showVertices() {
+        int index = 1;
+        for (int[] coordinate : this.coordinates) {
+            System.out.println("--------------------");
+            System.out.println("Index: " + index + " || X: " + coordinate[0] + " | Y: " + coordinate[1]);
+            index++;
+        }
     }
 
     public int calculateDistance(int[][] coordinates, int indexOfVertexI, int indexOfVertexJ) {
@@ -64,21 +86,27 @@ public class PathFinder {
                 }
             }
         }
-        return dist;
+
+        // find min
+        int min = Integer.MAX_VALUE;
+        int indexMin = -1;
+        for (int i = 0; i < dist.length; i++) {
+            if (dist[i] < min && dist[i] != 0) {
+                min = dist[i];
+                indexMin = i;
+            }
+        }
+        return new int[]{min, indexMin};
     }
 
-    public ArrayList<Integer> getShortestPath(int[][] graph, int srcIndex, int destination) {
+    public ArrayList<Integer> getShortestPath(int destination) {
         ArrayList<Integer> path = new ArrayList<>();
-        int[] dist = dijkstra(graph, srcIndex);
-        if (dist[destination] == Integer.MAX_VALUE) return path;
 
         for (int at = destination; at != -1; at = prev[at]) {
-            path.add(at);
+            path.add(at + 1);
         }
 
         Collections.reverse(path);
         return path;
     }
-
-
 }
