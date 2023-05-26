@@ -1,5 +1,6 @@
-package graph;
+package algorithms;
 
+import graph.Graph;
 import graph.vertex.Vertex;
 
 import java.util.ArrayList;
