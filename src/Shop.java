@@ -33,14 +33,14 @@ public class Shop {
                     excludeValue = K[i - 1][w];
                     if (includeValue > excludeValue) {
                         K[i][w] = includeValue;
-                        inSack[i] = true;
+                        inSack[i - 1] = true;
                     } else {
                         K[i][w] = excludeValue;
-                        inSack[i] = false;
+                        inSack[i - 1] = false;
                     }
                 } else {
                     K[i][w] = K[i - 1][w];
-                    inSack[i] = false;
+                    inSack[i - 1] = false;
                 }
             }
         }
