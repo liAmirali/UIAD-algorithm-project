@@ -13,6 +13,15 @@ public class PathFinder {
         Arrays.fill(this.prev, -1);
     }
 
+    public int calculateDistance(int[][] coordinates, int indexOfVertexI, int indexOfVertexJ) {
+        int x1 = coordinates[indexOfVertexI][0];
+        int y1 = coordinates[indexOfVertexI][1];
+        int x2 = coordinates[indexOfVertexJ][0];
+        int y2 = coordinates[indexOfVertexJ][1];
+
+        return (int) (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
+
     public int[] dijkstra(ArrayList<ArrayList<Integer>> graph, int srcIndex) {
         int size = graph.size();
         int[] dist = new int[size];
