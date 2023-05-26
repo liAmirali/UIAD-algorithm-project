@@ -10,16 +10,16 @@ import java.util.*;
 
 public abstract class Graph<V extends Vertexable<V>, E> {
     private final boolean isDirected;
-    private final Set<Vertex<V>> vertices;
-    private final Set<Edge<E>> edges;
+    private final List<Vertex<V>> vertices;
+    private final List<Edge<E>> edges;
 
     public int numVertices() {
         return vertices.size();
     }
 
     public Graph(boolean isDirected) {
-        this.vertices = new HashSet<>();
-        this.edges = new HashSet<>();
+        this.vertices = new ArrayList<>();
+        this.edges = new ArrayList<>();
         this.isDirected = isDirected;
     }
 
@@ -120,11 +120,11 @@ public abstract class Graph<V extends Vertexable<V>, E> {
         return isDirected;
     }
 
-    public Set<Vertex<V>> vertices() {
+    public List<Vertex<V>> vertices() {
         return vertices;
     }
 
-    public Set<Edge<E>> edges() {
+    public List<Edge<E>> edges() {
         return edges;
     }
 }
