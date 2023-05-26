@@ -1,16 +1,11 @@
-import algorithms.SequenceAlignment;
+import algorithms.QuickSort;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        String str1 = "GCATGCG";
-        String str2 = "GATTACA";
-
-        int mismatchPenalty = 3;
-        int gapPenalty = 2;
-
-        String[] answer = SequenceAlignment.align(str1, str2, mismatchPenalty, gapPenalty);
-        System.out.println(Arrays.toString(answer));
+        int[] a = {3, 3, 5, 5, 2, 6, 8, 4, 3, 7, 6, 8, 25, 3};
+        QuickSort.quickSort(a, 0, a.length - 1);
+        System.out.println(Arrays.toString(a));
     }
 }
