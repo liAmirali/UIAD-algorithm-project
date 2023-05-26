@@ -36,10 +36,10 @@ public class Menu {
                 System.out.println("Searching");
             }
             case "3" -> {
-                System.out.println("Purchasing");
+                runShopTest();
             }
             case "4" -> {
-                System.out.println("Routing");
+                runPathFinderTest();
             }
             default -> System.out.println("Wrong input!");
         }
