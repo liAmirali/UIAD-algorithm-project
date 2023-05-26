@@ -9,7 +9,7 @@ public class PathFinder {
 
     public PathFinder(int[][] graph) {
         this.graph = graph;
-        prev = new int[graph.size()];
+        prev = new int[graph.length];
         Arrays.fill(this.prev, -1);
     }
 
