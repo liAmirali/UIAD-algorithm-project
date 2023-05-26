@@ -1,42 +1,33 @@
 package algorithms;
 
-import java.util.Arrays;
 
+// Needleman–Wunsch algorithm
 public class SequenceAlignment {
     public SequenceAlignment() {
     }
 
-    // function to find out the minimum penalty
-    public static void getMinimumPenalty(String x, String y, int pxy, int pgap) {
+    public static String[] align(String x, String y, int pxy, int pgap) {
         int m = x.length();
         int n = y.length();
 
-        // table for storing optimal
-        // substructure answers
-        int[][] dp = new int[n + m + 1][n + m + 1];
+        int[][] table = new int[n + m + 1][n + m + 1];
 
         // Initializing the table
         for (int i = 0; i <= (n + m); i++) {
-            dp[i][0] = i * pgap;
-            dp[0][i] = i * pgap;
+            table[i][0] = i * pgap;
+            table[0][i] = i * pgap;
         }
 
-        // calculating the
-        // minimum penalty
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (x.charAt(i - 1) == y.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1];
-                } else {
-                    dp[i][j] = Math.min(Math.min(dp[i - 1][j - 1] + pxy,
-                                    dp[i - 1][j] + pgap),
-                            dp[i][j - 1] + pgap);
-                }
-            }
-        }
+
+        for (int i = 1; i <= m; i++)
+            for (int j = 1; j <= n; j++)
+                if (x.charAt(i - 1) == y.charAt(j - 1))
+                    table[i][j] = table[i - 1][j - 1];
+                else
+                    table[i][j] = Math.min(Math.min(table[i - 1][j - 1] + pxy, table[i - 1][j] + pgap), table[i][j - 1] + pgap);
 
         // Reconstructing the solution
-        int l = n + m; // maximum possible length
+        int l = n + m;
 
         int i = m;
         int j = n;
@@ -44,8 +35,7 @@ public class SequenceAlignment {
         int xpos = l;
         int ypos = l;
 
-        // Final answers for
-        // the respective strings
+        // Final answers for the respective strings
         int[] xans = new int[l + 1];
         int[] yans = new int[l + 1];
 
@@ -55,57 +45,47 @@ public class SequenceAlignment {
                 yans[ypos--] = y.charAt(j - 1);
                 i--;
                 j--;
-            } else if (dp[i - 1][j - 1] + pxy == dp[i][j]) {
+            } else if (table[i - 1][j - 1] + pxy == table[i][j]) {
                 xans[xpos--] = x.charAt(i - 1);
                 yans[ypos--] = y.charAt(j - 1);
                 i--;
                 j--;
-            } else if (dp[i - 1][j] + pgap == dp[i][j]) {
+            } else if (table[i - 1][j] + pgap == table[i][j]) {
                 xans[xpos--] = x.charAt(i - 1);
                 yans[ypos--] = '_';
                 i--;
-            } else if (dp[i][j - 1] + pgap == dp[i][j]) {
+            } else if (table[i][j - 1] + pgap == table[i][j]) {
                 xans[xpos--] = '_';
                 yans[ypos--] = y.charAt(j - 1);
                 j--;
             }
         }
-        while (xpos > 0) {
+        while (xpos > 0)
             if (i > 0) xans[xpos--] = x.charAt(--i);
             else xans[xpos--] = '_';
-        }
-        while (ypos > 0) {
+
+        while (ypos > 0)
             if (j > 0) yans[ypos--] = y.charAt(--j);
             else yans[ypos--] = '_';
-        }
 
-        // Since we have assumed the
-        // answer to be n+m long,
-        // we need to remove the extra
-        // gaps in the starting id
-        // represents the index from
-        // which the arrays xans,
-        // yans are useful
-        int id = 1;
-        for (i = l; i >= 1; i--) {
-            if ((char) yans[i] == '_' &&
-                    (char) xans[i] == '_') {
-                id = i + 1;
+        // Finding the index that the actual answers start
+        int start = 1;
+        for (i = l; i >= 1; i--)
+            if ((char) yans[i] == '_' && (char) xans[i] == '_') {
+                start = i + 1;
                 break;
             }
-        }
 
-        // Printing the final answer
-        System.out.print("Minimum Penalty in " +
-                "aligning the genes = ");
-        System.out.print(dp[m][n] + "\n");
-        System.out.println("The aligned genes are :");
-        for (i = id; i <= l; i++) {
-            System.out.print((char) xans[i]);
-        }
-        System.out.print("\n");
-        for (i = id; i <= l; i++) {
-            System.out.print((char) yans[i]);
-        }
+        StringBuilder str1 = new StringBuilder();
+        StringBuilder str2 = new StringBuilder();
+
+        for (i = start; i < l; i++)
+            str1.append((char) xans[i]);
+
+        for (i = start; i < l; i++)
+            str2.append((char) yans[i]);
+
+
+        return new String[]{str1.toString(), str2.toString()};
     }
 }
