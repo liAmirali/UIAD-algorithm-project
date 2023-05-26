@@ -4,7 +4,7 @@ public class Main {
 
     }
 
-    public void runPathFinderTest() {
+    public static void runPathFinderTest() {
         int[][] coordinates = {
                 {0, 5},
                 {5, 0},
