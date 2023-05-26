@@ -4,10 +4,10 @@ import java.util.*;
 
 
 public class PathFinder {
-    private ArrayList<ArrayList<Integer>> graph;
+    private int[][] graph;
     private final int[] prev;
 
-    public PathFinder(ArrayList<ArrayList<Integer>> graph) {
+    public PathFinder(int[][] graph) {
         this.graph = graph;
         prev = new int[graph.size()];
         Arrays.fill(this.prev, -1);
@@ -22,8 +22,20 @@ public class PathFinder {
         return (int) (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
-    public int[] dijkstra(ArrayList<ArrayList<Integer>> graph, int srcIndex) {
-        int size = graph.size();
+    public int[][] makeGraph(int[][] coordinates, int[][] edges) {
+        int size = coordinates.length;
+        int[][] graph = new int[size][size];
+        for (int[] edge : edges) {
+            int indexI = edge[0];
+            int indexJ = edge[1];
+            int distance = calculateDistance(coordinates, indexI, indexJ);
+            graph[indexI][indexJ] = distance;
+        }
+        return graph;
+    }
+
+    public int[] dijkstra(int[][] graph, int srcIndex) {
+        int size = graph.length;
         int[] dist = new int[size];
         PriorityQueue<Node> pq = new PriorityQueue<>();
 
@@ -42,10 +54,10 @@ public class PathFinder {
 
             // Update distances of neighboring nodes
             for (int i = 0; i < size; i++) {
-                int tempDist = currentDistance + graph.get(currentIndex).get(i);
+                int tempDist = currentDistance + graph[currentIndex][i];
 
                 // If a shorter path is found, update the distance and parent node
-                if (graph.get(currentIndex).get(i) != 0 && tempDist < dist[i]) {
+                if (graph[currentIndex][i] != 0 && tempDist < dist[i]) {
                     dist[i] = tempDist;
                     prev[i] = currentIndex;
                     pq.add(new Node(i, tempDist));
@@ -55,7 +67,7 @@ public class PathFinder {
         return dist;
     }
 
-    public ArrayList<Integer> getShortestPath(ArrayList<ArrayList<Integer>> graph, int srcIndex, int destination) {
+    public ArrayList<Integer> getShortestPath(int[][] graph, int srcIndex, int destination) {
         ArrayList<Integer> path = new ArrayList<>();
         int[] dist = dijkstra(graph, srcIndex);
         if (dist[destination] == Integer.MAX_VALUE) return path;
