@@ -12,13 +12,15 @@ public class PathFinder {
         this.graph = graph;
     }
 
-    private int[] dijkstra(ArrayList<ArrayList<Integer>> graph, int srcIndex, int size) {
+    public Tuple<int[], int[]> dijkstra(ArrayList<ArrayList<Integer>> graph, int srcIndex) {
+        int size = graph.size();
         int[] dist = new int[size];
         int[] prev = new int[size];
         PriorityQueue<Tuple<Integer, Integer>> pq = new PriorityQueue<>();
 
         pq.offer(new Tuple<>(srcIndex, 0));
         Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(prev, -1);
         dist[srcIndex] = 0;
 
         while (!pq.isEmpty()) {
@@ -42,6 +44,19 @@ public class PathFinder {
                 }
             }
         }
-        return dist;
+        return new Tuple<>(dist, prev);
+    }
+
+    public ArrayList<Integer> getShortestPath(ArrayList<ArrayList<Integer>> graph, int srcIndex, int destination) {
+        ArrayList<Integer> path = new ArrayList<>();
+        Tuple<int[], int[]> dijkstraOutput = dijkstra(graph, srcIndex);
+        if (dijkstraOutput.x[destination] == Integer.MAX_VALUE) return path;
+
+        for (int at = destination; at != -1; at = dijkstraOutput.y[at]) {
+            path.add(at);
+        }
+
+        Collections.reverse(path);
+        return path;
     }
 }
