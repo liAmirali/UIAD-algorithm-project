@@ -67,7 +67,7 @@ public class Menu {
                 int u = Integer.parseInt(nodes[1]) - 1;
 
                 if (v > n || u > n) {
-                    System.out.println("Invalid input. algorithms.Node numbers cannot be larger than " + n);
+                    System.out.println("Invalid input. Node numbers cannot be larger than " + n);
                     break;
                 }
 
@@ -93,7 +93,7 @@ public class Menu {
                 for (int i = 0; i < colorings.size(); i++) {
                     System.out.println("Coloring #" + (i + 1) + ":");
                     for (int j = 0; j < colorings.get(i).length; j++) {
-                        System.out.println("algorithms.Node #" + j + ": " + "Color[" + colorings.get(i)[j] + "]");
+                        System.out.println("Node #" + j + ": " + "Color[" + colorings.get(i)[j] + "]");
                     }
                 }
 
