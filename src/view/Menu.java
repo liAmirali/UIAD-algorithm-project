@@ -49,7 +49,7 @@ public class Menu {
 
     public static void showDeignPage() {
         clearScreen();
-        printHeader("Design a New models.Carpet");
+        printHeader("Design a New Carpet");
 
         int[][] matrix;
         int n;
@@ -210,7 +210,7 @@ public class Menu {
 
     static void printHeader(String text) {
         System.out.print(Color.ANSI_BLUE_BACKGROUND + "### " + Color.ANSI_RESET);
-        System.out.print(Color.ANSI_BLUE_BACKGROUND + "models.Carpet Factory" + Color.ANSI_RESET);
+        System.out.print(Color.ANSI_BLUE_BACKGROUND + "Carpet Factory" + Color.ANSI_RESET);
         System.out.println(Color.ANSI_BLUE_BACKGROUND + " ###" + Color.ANSI_RESET);
 
         System.out.print(Color.ANSI_CYAN_BACKGROUND + "-- " + Color.ANSI_RESET);

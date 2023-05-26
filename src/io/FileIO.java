@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class FileIO {
     public final static String CARPET_PATTERN_FILE_PATH = "./files/1-1.txt";
-    public final static String[] CARPETS_FILE_PATHS = {"./files/carpet0.txt",
+    public final static String[] CARPETS_FILE_PATHS = {
             "./files/carpet0.txt",
             "./files/carpet1.txt",
             "./files/carpet2.txt",
